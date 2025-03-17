@@ -10,4 +10,16 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\RecipeBookApp.Communication\RecipeBookApp.Communication.csproj" />
+    <ProjectReference Include="..\..\..\RecipeBookApp.Exceptions\RecipeBookApp.Exceptions.csproj" />
+    <ProjectReference Include="..\..\Shared\RecipeBookApp.Communication\RecipeBookApp.Communication.csproj" />
+    <ProjectReference Include="..\..\Shared\RecipeBookApp.Exceptions\RecipeBookApp.Exceptions.csproj" />
+    <ProjectReference Include="..\RecipeBookApp.Application\RecipeBookApp.Application.csproj" />
+  </ItemGroup>
+
 </Project>
