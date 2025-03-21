@@ -17,7 +17,7 @@ namespace MyRecipeApp.Communications.Responses
 
         public ResponseErrorJson(string error)
         {
-            Errors = new List<string> { error };
+            Errors = new List<string> { error};
         }
     }
 }

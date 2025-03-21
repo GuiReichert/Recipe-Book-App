@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
+using MyRecipeApp.Apllication.Services.Automapper;
 using MyRecipeApp.Communications.Requests;
 using MyRecipeApp.Communications.Responses;
+using MyRecipeApp.Domain.Entities;
 using MyRecipeApp.Exceptions.ExceptionsBase;
 
 namespace MyRecipeApp.Apllication.UseCases.User.Register
@@ -14,6 +17,16 @@ namespace MyRecipeApp.Apllication.UseCases.User.Register
         public ResponseRegisteredUserJson Execute(RequestRegisterUserJson request)
         {
             ValidateUser(request);
+
+            var mapper = new AutoMapper.MapperConfiguration(options =>
+            { options.AddProfile(new MapperProfile()); 
+            }).CreateMapper();
+
+            var user = mapper.Map<Domain.Entities.User>(request);
+
+
+
+
 
 
             return new ResponseRegisteredUserJson 
@@ -30,7 +43,7 @@ namespace MyRecipeApp.Apllication.UseCases.User.Register
 
             var result = validator.Validate(request);
 
-            if (result.IsValid)
+            if (!result.IsValid)
             {
                 var errorMessages = result.Errors.Select(e => e.ErrorMessage).ToList();
                 throw new ErrorOnValidationException(errorMessages);
