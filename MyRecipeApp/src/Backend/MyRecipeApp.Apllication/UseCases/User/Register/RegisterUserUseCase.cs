@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using MyRecipeApp.Apllication.Services.Automapper;
+using MyRecipeApp.Apllication.Services.Criptography;
 using MyRecipeApp.Communications.Requests;
 using MyRecipeApp.Communications.Responses;
 using MyRecipeApp.Domain.Entities;
@@ -16,15 +17,14 @@ namespace MyRecipeApp.Apllication.UseCases.User.Register
     {
         public ResponseRegisteredUserJson Execute(RequestRegisterUserJson request)
         {
+            var mapper = new AutoMapper.MapperConfiguration(options => options.AddProfile(new MapperProfile())).CreateMapper();
+            var passwordCriptography = new PasswordEncripter();
+
             ValidateUser(request);
 
-            var mapper = new AutoMapper.MapperConfiguration(options =>
-            { options.AddProfile(new MapperProfile()); 
-            }).CreateMapper();
-
             var user = mapper.Map<Domain.Entities.User>(request);
-
-
+            user.Password = passwordCriptography.Encrypt(request.Password);
+            
 
 
 

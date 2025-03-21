@@ -15,9 +15,6 @@ namespace MyRecipeApp.API.Controllers
         [ProducesResponseType(typeof(ResponseRegisteredUserJson),StatusCodes.Status201Created)]
         public IActionResult Register(RequestRegisterUserJson request)
         {
-
-
-
             var useCase = new RegisterUserUseCase();
 
             var result = useCase.Execute(request);
