@@ -1,16 +1,31 @@
 using MyRecipeApp.API.Filters;
 using MyRecipeApp.API.Middleware;
+using MyRecipeApp.Apllication;
+using MyRecipeApp.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddMvc(options => options.Filters.Add(typeof(ExceptionFilter)));           // sempre que uma exceção ocorrer, ele será tratado como um ExceptionFilter
+
+
+
+builder.Services.AddInfrastructure();                                                       // Extension methods to add dependency injection coming from the Infrastructure and Application Solutions
+builder.Services.AddApplication();                                                          
+
+
+
+
+
+
+
+
+
 
 
 

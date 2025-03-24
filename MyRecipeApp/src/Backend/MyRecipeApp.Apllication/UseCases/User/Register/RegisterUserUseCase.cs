@@ -15,19 +15,29 @@ using MyRecipeApp.Exceptions.ExceptionsBase;
 
 namespace MyRecipeApp.Apllication.UseCases.User.Register
 {
-    public class RegisterUserUseCase
+    public class RegisterUserUseCase : IRegisterUserUseCase
     {
         private readonly IUserReadOnlyRepository _userReadOnlyRepository;
         private readonly IUserWriteOnlyRepository _userWriteOnlyRepository;
+        private readonly IMapper _mapper;
+        private readonly PasswordEncripter _passwordEncripter;
+
+        public RegisterUserUseCase(IUserReadOnlyRepository userReadOnlyRepository, IUserWriteOnlyRepository userWriteOnlyRepository, IMapper mapper, PasswordEncripter passwordEncripter)
+        {
+            _userReadOnlyRepository = userReadOnlyRepository;
+            _userWriteOnlyRepository = userWriteOnlyRepository;
+            _mapper = mapper;
+            _passwordEncripter = passwordEncripter;
+        }
+
+
+
         public async Task<ResponseRegisteredUserJson> Execute(RequestRegisterUserJson request)
         {
-            var mapper = new AutoMapper.MapperConfiguration(options => options.AddProfile(new MapperProfile())).CreateMapper();
-            var passwordCriptography = new PasswordEncripter();
-
             ValidateUser(request);
 
-            var user = mapper.Map<Domain.Entities.User>(request);
-            user.Password = passwordCriptography.Encrypt(request.Password);
+            var user = _mapper.Map<Domain.Entities.User>(request);
+            user.Password = _passwordEncripter.Encrypt(request.Password);
             
 
             await _userWriteOnlyRepository.Add(user);

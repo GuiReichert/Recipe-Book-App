@@ -14,6 +14,7 @@
     <ProjectReference Include="..\..\Shared\MyRecipeApp.Communications\MyRecipeApp.Communications.csproj" />
     <ProjectReference Include="..\..\Shared\MyRecipeApp.Exceptions\MyRecipeApp.Exceptions.csproj" />
     <ProjectReference Include="..\MyRecipeApp.Apllication\MyRecipeApp.Apllication.csproj" />
+    <ProjectReference Include="..\MyRecipeApp.Infrastructure\MyRecipeApp.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
