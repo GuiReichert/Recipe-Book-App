@@ -12,6 +12,9 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddMvc(options => options.Filters.Add(typeof(ExceptionFilter)));           // sempre que uma exceção ocorrer, ele será tratado como um ExceptionFilter
 
+
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

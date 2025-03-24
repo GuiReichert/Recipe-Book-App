@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -9,13 +10,16 @@ using MyRecipeApp.Apllication.Services.Criptography;
 using MyRecipeApp.Communications.Requests;
 using MyRecipeApp.Communications.Responses;
 using MyRecipeApp.Domain.Entities;
+using MyRecipeApp.Domain.Repositories.User;
 using MyRecipeApp.Exceptions.ExceptionsBase;
 
 namespace MyRecipeApp.Apllication.UseCases.User.Register
 {
     public class RegisterUserUseCase
     {
-        public ResponseRegisteredUserJson Execute(RequestRegisterUserJson request)
+        private readonly IUserReadOnlyRepository _userReadOnlyRepository;
+        private readonly IUserWriteOnlyRepository _userWriteOnlyRepository;
+        public async Task<ResponseRegisteredUserJson> Execute(RequestRegisterUserJson request)
         {
             var mapper = new AutoMapper.MapperConfiguration(options => options.AddProfile(new MapperProfile())).CreateMapper();
             var passwordCriptography = new PasswordEncripter();
@@ -26,6 +30,7 @@ namespace MyRecipeApp.Apllication.UseCases.User.Register
             user.Password = passwordCriptography.Encrypt(request.Password);
             
 
+            await _userWriteOnlyRepository.Add(user);
 
 
 
