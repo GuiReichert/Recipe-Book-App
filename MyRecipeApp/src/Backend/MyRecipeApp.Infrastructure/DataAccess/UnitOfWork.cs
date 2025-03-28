@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MyRecipeApp.Domain.Repositories;
 
-namespace MyRecipeApp.Infrastructure.DataAccess.Repositories
+namespace MyRecipeApp.Infrastructure.DataAccess
 {
     public class UnitOfWork : IUnitOfWork
     {

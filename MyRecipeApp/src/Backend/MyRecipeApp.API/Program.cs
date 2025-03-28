@@ -15,8 +15,8 @@ builder.Services.AddMvc(options => options.Filters.Add(typeof(ExceptionFilter)))
 
 
 
-builder.Services.AddInfrastructure();                                                       // Extension methods to add dependency injection coming from the Infrastructure and Application Solutions
-builder.Services.AddApplication();                                                          
+builder.Services.AddInfrastructure(builder.Configuration);                                                       // Extension methods to add dependency injection coming from the Infrastructure and Application Solutions
+builder.Services.AddApplication(builder.Configuration);                                                          
 
 
 

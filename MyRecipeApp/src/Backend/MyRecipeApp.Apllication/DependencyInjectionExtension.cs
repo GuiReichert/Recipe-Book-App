@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MyRecipeApp.Apllication.Services.Automapper;
 using MyRecipeApp.Apllication.Services.Criptography;
@@ -12,11 +14,11 @@ namespace MyRecipeApp.Apllication
 {
     public static class DependencyInjectionExtension
     {
-        public static void AddApplication(this IServiceCollection services)
+        public static void AddApplication(this IServiceCollection services, IConfiguration config)
         {
             AddAutoMapper(services);
             AddUseCases(services);
-            AddPasswordEncripter(services);
+            AddPasswordEncripter(services, config);
         }
 
         private static void AddAutoMapper(IServiceCollection services)
@@ -32,9 +34,11 @@ namespace MyRecipeApp.Apllication
         }
 
 
-        private static void AddPasswordEncripter(IServiceCollection services)
+        private static void AddPasswordEncripter(IServiceCollection services, IConfiguration configuration)
         {
-            services.AddScoped(options => new PasswordEncripter());
+            var PasswordSalt = configuration.GetSection("Settings:Password:PasswordSalt").Value;
+
+            services.AddScoped(options => new PasswordEncripter(PasswordSalt!));
         }
 
 

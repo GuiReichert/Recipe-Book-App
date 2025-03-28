@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MyRecipeApp.Domain.Repositories;
 using MyRecipeApp.Domain.Repositories.User;
@@ -14,15 +15,15 @@ namespace MyRecipeApp.Infrastructure
 {
     public static class DependencyInjectionExtension
     {
-        public static void AddInfrastructure(this IServiceCollection services)
+        public static void AddInfrastructure(this IServiceCollection services, IConfiguration config)
         {
-            AddDbContext(services);
+            AddDbContext(services, config);
             AddRepositories(services);
         }
 
-        private static void AddDbContext(IServiceCollection services)
+        private static void AddDbContext(IServiceCollection services, IConfiguration config)
         {
-            var connectionString = "Server = GUILHERME\\SQLEXPRESS; Database=MyRecipeApp; Trusted_Connection=true; TrustServerCertificate=true;";
+            var connectionString = config.GetConnectionString("DefaultConnection");
 
             services.AddDbContext<MyRecipeApp_DbContext>(options =>
             {

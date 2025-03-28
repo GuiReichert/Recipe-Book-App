@@ -10,11 +10,17 @@ namespace MyRecipeApp.Apllication.Services.Criptography
 {
     public class PasswordEncripter
     {
+        private string _passwordSalt;
+
+        public PasswordEncripter(string passwordSalt)
+        {
+            _passwordSalt = passwordSalt;
+        }
+
+
         public string Encrypt(string password)
         {
-            var passwordSalt = "fuidsbndgdfsgGDSFDScACascascDfd";
-
-            var newPassword = $"{password}{passwordSalt}";
+            var newPassword = $"{password}{_passwordSalt}";
 
             var bytes = Encoding.UTF8.GetBytes(newPassword);
             var hashBytes = SHA512.HashData(bytes);
