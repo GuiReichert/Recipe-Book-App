@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using MyRecipeApp.Domain.Repositories;
 using MyRecipeApp.Domain.Repositories.User;
 using MyRecipeApp.Infrastructure.DataAccess;
 using MyRecipeApp.Infrastructure.DataAccess.Repositories;
@@ -33,6 +34,7 @@ namespace MyRecipeApp.Infrastructure
         {
             services.AddScoped<IUserWriteOnlyRepository, UserRepository>();
             services.AddScoped<IUserReadOnlyRepository, UserRepository>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
         }
     }
 }

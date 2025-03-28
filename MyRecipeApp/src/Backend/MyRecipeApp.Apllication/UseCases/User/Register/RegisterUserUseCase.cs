@@ -10,6 +10,7 @@ using MyRecipeApp.Apllication.Services.Criptography;
 using MyRecipeApp.Communications.Requests;
 using MyRecipeApp.Communications.Responses;
 using MyRecipeApp.Domain.Entities;
+using MyRecipeApp.Domain.Repositories;
 using MyRecipeApp.Domain.Repositories.User;
 using MyRecipeApp.Exceptions.ExceptionsBase;
 
@@ -19,13 +20,15 @@ namespace MyRecipeApp.Apllication.UseCases.User.Register
     {
         private readonly IUserReadOnlyRepository _userReadOnlyRepository;
         private readonly IUserWriteOnlyRepository _userWriteOnlyRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly PasswordEncripter _passwordEncripter;
 
-        public RegisterUserUseCase(IUserReadOnlyRepository userReadOnlyRepository, IUserWriteOnlyRepository userWriteOnlyRepository, IMapper mapper, PasswordEncripter passwordEncripter)
+        public RegisterUserUseCase(IUserReadOnlyRepository userReadOnlyRepository, IUserWriteOnlyRepository userWriteOnlyRepository,IUnitOfWork unitOfWork, IMapper mapper, PasswordEncripter passwordEncripter)
         {
             _userReadOnlyRepository = userReadOnlyRepository;
             _userWriteOnlyRepository = userWriteOnlyRepository;
+            _unitOfWork = unitOfWork;
             _mapper = mapper;
             _passwordEncripter = passwordEncripter;
         }
@@ -41,6 +44,8 @@ namespace MyRecipeApp.Apllication.UseCases.User.Register
             
 
             await _userWriteOnlyRepository.Add(user);
+
+            await _unitOfWork.Commit();
 
 
 

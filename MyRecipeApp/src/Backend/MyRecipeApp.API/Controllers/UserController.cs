@@ -13,9 +13,9 @@ namespace MyRecipeApp.API.Controllers
     {
         [HttpPost]
         [ProducesResponseType(typeof(ResponseRegisteredUserJson),StatusCodes.Status201Created)]
-        public IActionResult Register([FromServices]IRegisterUserUseCase useCase,RequestRegisterUserJson request)       // [FromServices] : takes the dependency created in the program.cs file (builder.services.addscopes...)
+        public async Task<IActionResult>  Register([FromServices]IRegisterUserUseCase useCase,RequestRegisterUserJson request)       // [FromServices] : takes the dependency created in the program.cs file (builder.services.addscopes...)
         {
-            var result = useCase.Execute(request);
+            var result = await useCase.Execute(request);
 
             return Created(string.Empty, result);
 
